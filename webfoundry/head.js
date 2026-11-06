@@ -101,9 +101,9 @@
     nativeVariant.textContent = '@custom-variant native (&:is(html:where([wf-native-preview]) *));\n';
     document.head.append(nativeVariant);
 
-    // desktop:/mobile: and the OS variants win:/nux:/mac:/android: follow the same
+    // desktop:/mobile: and the OS variants win:/lin:/mac:/android: follow the same
     // html preview attributes (IDE Platform Preview); Nasty resolves them natively.
-    // Each is a condition on the element itself so variants stack (nux:mobile:…).
+    // Each is a condition on the element itself so variants stack (lin:mobile:…).
     if (!document.querySelector('style.wf-platform-variants')) {
       let platformVariants = document.createElement('style');
       platformVariants.type = 'text/tailwindcss';
@@ -113,7 +113,7 @@
         '@custom-variant desktop (&:is(html[wf-desktop-preview] *));',
         '@custom-variant mobile (&:is(html[wf-mobile-preview] *));',
         '@custom-variant win (&:is(html[wf-win-preview] *));',
-        '@custom-variant nux (&:is(html[wf-nux-preview] *));',
+        '@custom-variant lin (&:is(html[wf-lin-preview] *));',
         '@custom-variant mac (&:is(html[wf-mac-preview] *));',
         '@custom-variant android (&:is(html[wf-android-preview] *));',
         '',
@@ -122,21 +122,57 @@
     }
 
     // Theme utilities as Tailwind @utility blocks, so every variant composes:
-    // adw-* (GNOME Adwaita, from adwaita-web) and and-* (Android Material Design 3,
-    // from Beer CSS) — e.g. nux:adw-button, android:mobile:and-button.
-    await Promise.all(['adwaita', 'material'].map(async name => {
-      try {
-        let res = await fetch(`${prefix}webfoundry/${name}.tw.css`);
-        if (!res.ok) return;
-        let style = document.createElement('style');
-        style.type = 'text/tailwindcss';
-        style.className = `wf-${name}`;
-        style.textContent = await res.text();
-        document.head.append(style);
-      } catch (err) {
-        console.warn(`${name} utilities unavailable:`, err);
-      }
-    }));
+    // adw-* (GNOME Adwaita, from adwaita-web), and-* (Android Material Design 3, from
+    // Beer CSS) and win-* (Windows Fluent 2, from the Kendo UI Fluent theme) — e.g.
+    // lin:adw-button, android:mobile:and-button, win:win-button.
+    // Each theme is large, so it loads only once the page uses its prefix
+    // (checked now and on DOM changes, like the icon CSS below).
+    let themes = { adw: 'adwaita', and: 'material', win: 'fluent' };
+    // Append each theme once, with its content: Tailwind recompiles every
+    // text/tailwindcss style whenever one changes, so no empty placeholder first.
+    let themeLoads = (window.wfThemeLoads ??= new Map());
+    let loadTheme = key => {
+      let name = themes[key];
+      if (!name || themeLoads.has(name) || document.querySelector(`style.wf-${name}`)) return themeLoads.get(name);
+      let load = (async () => {
+        try {
+          let res = await fetch(`${prefix}webfoundry/${name}.tw.css`);
+          if (!res.ok || document.querySelector(`style.wf-${name}`)) return;
+          let style = document.createElement('style');
+          style.type = 'text/tailwindcss';
+          style.className = `wf-${name}`;
+          style.textContent = await res.text();
+          document.head.append(style);
+        } catch (err) {
+          console.warn(`${name} utilities unavailable:`, err);
+        }
+      })();
+      themeLoads.set(name, load);
+      return load;
+    };
+    let themeRe = /(?:^|[\s:])(adw|and|win)-[\w-]/g;
+    let scanThemes = el => {
+      let found = new Set();
+      let visit = node => {
+        if (node.nodeType !== 1) return;
+        for (let m of String(node.className?.baseVal ?? node.className ?? '').matchAll(themeRe)) found.add(m[1]);
+      };
+      visit(el);
+      for (let x of el.querySelectorAll?.('[class]') ?? []) visit(x);
+      return found;
+    };
+    let initial = scanThemes(document.documentElement);
+    await Promise.all([...initial].map(loadTheme));
+    if (initial.size < Object.keys(themes).length) {
+      let themeObserver = new MutationObserver(muts => {
+        for (let mut of muts) {
+          let nodes = mut.type === 'attributes' ? [mut.target] : [...mut.addedNodes];
+          for (let node of nodes) for (let key of scanThemes(node)) loadTheme(key);
+        }
+        if (Object.values(themes).every(name => themeLoads.has(name))) themeObserver.disconnect();
+      });
+      themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'], childList: true, subtree: true });
+    }
 
     // Symbolic icons (adw-icon-*) are plain CSS with inlined SVGs; only load
     // them once a page actually uses one.

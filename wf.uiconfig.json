@@ -3,7 +3,7 @@
   "tailwind": true,
   "betterscroll": true,
   "nativeExport": {
-    "target": "android-arm64",
+    "target": "linux-x64",
     "width": 300,
     "height": 265,
     "startMaximized": false,
@@ -17,10 +17,10 @@
       "win-x64": "rounded-3xl backdrop-blur-md bg-transparent",
       "android-arm64": ""
     },
-    "systemTheme": {
-      "linux-x64": true,
-      "win-x64": true,
-      "android-arm64": true
+    "theme": {
+      "linux-x64": "kendo",
+      "win-x64": "system",
+      "android-arm64": "kendo"
     }
   }
 }

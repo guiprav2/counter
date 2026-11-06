@@ -20,65 +20,65 @@
     style="display: none"
   >
     <div
-      class="min-h-screen flex items-center justify-center p-6 overflow-hidden relative desktop:p-0 desktop:items-stretch gfont-[JetBrains_Mono] bg-neutral-950 text-neutral-300 nux:adw-page nux:p-0 nux:items-stretch android:and-body android:p-0 android:items-stretch"
+      class="min-h-screen flex items-center justify-center p-6 overflow-hidden relative desktop:p-0 desktop:items-stretch gfont-[JetBrains_Mono] bg-neutral-950 text-neutral-300 android:and-body android:p-0 android:items-stretch lin:adw-page lin:p-0 lin:items-stretch win:win-body win:p-0 win:items-stretch"
     >
       <div
-        class="relative w-full max-w-sm border text-left flex flex-col desktop:max-w-[100vw] desktop:border-0 desktop:shadow-none min-w-min border-neutral-800 bg-neutral-900 rounded-lg overflow-hidden nux:adw-background nux:max-w-none nux:border-0 nux:rounded-none nux:shadow-none android:bg-transparent android:border-0 android:rounded-none android:shadow-none android:max-w-none"
+        class="relative w-full max-w-sm border text-left flex flex-col desktop:max-w-[100vw] desktop:border-0 desktop:shadow-none min-w-min border-neutral-800 bg-neutral-900 rounded-lg overflow-hidden android:bg-transparent android:border-0 android:rounded-none android:shadow-none android:max-w-none lin:adw-background lin:max-w-none lin:border-0 lin:rounded-none lin:shadow-none win:bg-transparent win:border-0 win:rounded-none win:shadow-none win:max-w-none"
       >
         <div
-          class="flex items-center justify-between border-b border-neutral-800 px-3 py-2 text-xs text-neutral-500 nux:adw-header-bar android:and-header android:and-surface android:border-b-0"
+          class="flex items-center justify-between border-b border-neutral-800 px-3 py-2 text-xs text-neutral-500 android:and-header android:and-surface android:border-b-0 lin:adw-header-bar win:h-8 win:py-0 win:pl-3 win:pr-0 win:border-b-0 win:win-color-on-app-surface win:text-xs"
         >
-          <div class="hidden nux:desktop:flex nux:flex-1 nux:basis-0"></div>
+          <div class="hidden lin:desktop:flex lin:flex-1 lin:basis-0"></div>
           <span
             class="adw-header-bar-center-box adw-header-bar-title android:and-h6"
             >{{state.counter.title}}</span
           >
           <div
-            class="hidden gap-1 desktop:flex nux:desktop:flex-1 nux:basis-0 nux:justify-end nux:items-center nux:gap-1 android:hidden"
+            class="hidden gap-1 desktop:flex android:hidden lin:desktop:flex-1 lin:basis-0 lin:justify-end lin:items-center lin:gap-1 win:gap-0 win:self-stretch"
           >
             <button
-              class="flex h-6 w-6 items-center justify-center rounded text-neutral-500 transition hover:bg-neutral-800 hover:text-neutral-200 nux:adw-button adw-flat adw-circular"
+              class="flex h-6 w-6 items-center justify-center rounded text-neutral-500 transition hover:bg-neutral-800 hover:text-neutral-200 adw-flat adw-circular lin:adw-button win:w-[46px] win:h-8 win:rounded-none win:text-[#242424] win:hover:bg-black/5 win:hover:text-[#242424]"
               title="Minimize"
               wf-onclick="post('counter.minimize')"
               value=""
             >
-              <span class="nux:hidden">_</span
+              <span class="lin:hidden win:hidden">_</span
               ><span
-                class="hidden nux:inline-flex nf nf-md-window_minimize"
+                class="hidden nf nf-md-window_minimize lin:inline-flex win:inline-flex"
               ></span>
             </button>
             <button
-              class="flex h-6 w-6 items-center justify-center rounded text-neutral-500 transition hover:bg-red-500/80 hover:text-white nux:adw-button adw-flat adw-circular"
+              class="flex h-6 w-6 items-center justify-center rounded text-neutral-500 transition hover:bg-red-500/80 hover:text-white adw-flat adw-circular lin:adw-button win:w-[46px] win:h-8 win:rounded-none win:text-[#242424] win:hover:bg-[#c42b1c] win:hover:text-white"
               title="Close"
               wf-onclick="post('counter.close')"
               value=""
             >
-              <span class="nux:hidden">x</span
+              <span class="lin:hidden win:hidden">x</span
               ><span
-                class="hidden nux:inline-flex nf nf-md-window_close"
+                class="hidden nf nf-md-window_close lin:inline-flex win:inline-flex"
               ></span>
             </button>
           </div>
         </div>
         <div
-          class="flex flex-col desktop:flex-1 desktop:justify-center px-6 py-2 nux:flex-1 nux:justify-center android:flex-1 android:justify-center"
+          class="flex flex-col desktop:flex-1 desktop:justify-center px-6 py-2 android:flex-1 android:justify-center lin:flex-1 lin:justify-center win:flex-1 win:justify-center"
         >
           <div
-            class="text-7xl font-semibold text-green-400 text-ellipsis overflow-hidden mt-4 mb-6 text-center w-84 nux:adw-accent nux:adw-numeric android:and-h1 android:and-primary-text native:w-full"
+            class="text-7xl font-semibold text-green-400 text-ellipsis overflow-hidden mt-4 mb-6 text-center w-84 android:and-h1 android:and-primary-text native:w-full lin:adw-accent lin:adw-numeric win:win-h1 win:win-color-primary"
           >
             {{state.counter.count}}
           </div>
 
           <div class="grid grid-cols-2 gap-3">
             <button
-              class="rounded border border-neutral-700 py-3 text-2xl text-neutral-200 transition hover:border-green-500 hover:text-green-400 active:translate-y-px nux:adw-button adw-pill android:and-button android:and-large android:and-secondary-container"
+              class="rounded border border-neutral-700 py-3 text-2xl text-neutral-200 transition hover:border-green-500 hover:text-green-400 active:translate-y-px adw-pill android:and-button android:and-large android:and-secondary-container lin:adw-button win:win-button win:win-button-lg win:win-rounded-md win:win-button-solid win:win-button-base"
               wf-onclick="post('counter.decrement')"
               value=""
             >
               −
             </button>
             <button
-              class="rounded border border-neutral-700 py-3 text-2xl text-neutral-200 transition hover:border-green-500 hover:text-green-400 active:translate-y-px nux:adw-button adw-pill adw-suggested-action android:and-button android:and-large"
+              class="rounded border border-neutral-700 py-3 text-2xl text-neutral-200 transition hover:border-green-500 hover:text-green-400 active:translate-y-px adw-pill adw-suggested-action android:and-button android:and-large lin:adw-button win:win-button win:win-button-lg win:win-rounded-md win:win-button-solid win:win-button-primary"
               wf-onclick="post('counter.increment')"
               value=""
             >
@@ -86,7 +86,7 @@
             </button>
           </div>
           <button
-            class="mt-3 rounded py-2 text-xs uppercase tracking-widest text-neutral-500 transition hover:text-neutral-200 nux:adw-button adw-flat nux:normal-case nux:tracking-normal android:and-button android:and-border android:normal-case android:tracking-normal"
+            class="mt-3 rounded py-2 text-xs uppercase tracking-widest text-neutral-500 transition hover:text-neutral-200 adw-flat android:and-button android:and-border android:normal-case android:tracking-normal lin:adw-button lin:normal-case lin:tracking-normal win:win-button win:win-button-md win:win-rounded-md win:win-button-flat win:win-color-on-app-surface win:normal-case win:tracking-normal"
             wf-onclick="post('counter.reset')"
             value=""
           >
