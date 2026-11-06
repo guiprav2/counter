@@ -1,0 +1,26 @@
+{
+  "nerdfonts": true,
+  "tailwind": true,
+  "betterscroll": true,
+  "nativeExport": {
+    "target": "android-arm64",
+    "width": 300,
+    "height": 265,
+    "startMaximized": false,
+    "rememberDimensions": false,
+    "borderless": true,
+    "dragAnywhere": true,
+    "resizable": "none",
+    "orientation": "auto",
+    "documentClassNames": {
+      "linux-x64": "",
+      "win-x64": "rounded-3xl backdrop-blur-md bg-transparent",
+      "android-arm64": ""
+    },
+    "systemTheme": {
+      "linux-x64": true,
+      "win-x64": true,
+      "android-arm64": true
+    }
+  }
+}
